@@ -1,0 +1,128 @@
+<html>
+
+<head>
+    <title>demo color picker</title>
+    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="css/jquery.colorpicker.css">
+    <link rel="stylesheet" href="css/jquery.tablesheet.css">
+    <style>
+    .container {
+        margin: 0 auto;
+        /* width: 100%; */
+        /* display: inline-block; */
+        position: absolute;
+        left: 300px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class='container'>
+        <div class="left col1-4 small-text">
+            Background color:
+            <input id="colorpick_bc" type="text" size="4" value="000000" style="display: none;">
+        </div>
+        <table id="datatable" class="jqueryTableSheet">
+        </table>
+    </div>
+    <script type="text/javascript" src='jquery-1.7.1.js'></script>
+    <script type="text/javascript" src='jquery-ui.js'></script>
+    <script type="text/javascript" src='jquery.jeditable.mini.js'></script>
+    <script type="text/javascript" src='jquery.colorpicker.js'></script>
+    <script type="text/javascript" src='jquery.tablesheet.js'></script>
+    <script type="text/javascript">
+    (function() {
+        var maxTableRows = 50;
+        var maxTableCols = 50;
+        // size of one square in real 3d units
+        var squareStep = 200;
+        // maximum height of the walls (y and z)
+        var valHeight = 1000;
+        // Background Color
+        var backColor = "000000";
+        // Colour for the text on the x and y scales
+        var scaleTextColor = "eeeeee";
+        // Colour for the text on each bar
+        var valTextColor = "ffffff";
+        var schema = {
+            cols: [{
+                name: "Column Name",
+                color: "ae00e6"
+            }],
+            rows: [{
+                name: "Row Name"
+            }]
+        };
+        var dataValues = [
+            [0]
+        ];
+        // for the table default texts/vaules
+        var defaultRowText = "Row Name";
+        var defaultColText = "Column Name";
+        var defaultCellVal = 0;
+        var initDataCols = "";
+
+
+        $('#colorpick_bc').colorpicker({
+            parts: ['swatches'],
+            showOn: 'button',
+            showCloseButton: true,
+            buttonColorize: true,
+            showNoneButton: false,
+            alpha: true,
+            buttonImage: 'ui-colorpicker.png'
+        });
+
+        schema = {
+            cols: [{
+                name: "2010",
+                color: "d17100"
+            }, {
+                name: "2011",
+                color: "d9bd00"
+            }, {
+                name: "2012",
+                color: "61c900"
+            }],
+            rows: [{
+                name: "Product 1"
+            }, {
+                name: "Product 2"
+            }, {
+                name: "Product 3"
+            }, {
+                name: "Product 4"
+            }, {
+                name: "Product 5"
+            }]
+        };
+
+        dataValues = [];
+
+        for (var i = 0; i < schema.cols.length; i++) {
+            dataValues[i] = [];
+            for (var j = 0; j < schema.rows.length; j++) {
+                dataValues[i][j] = Math.floor((Math.random() * 1000));
+            }
+        }
+
+        $('#datatable').tableSheet({
+            initSchema: schema,
+            initData: dataValues,
+            maxRows: maxTableRows,
+            exportText: 'Generate',
+            exportCall: function(param) {
+                console.log(param)
+            },
+            imgUrl: '',
+            colorpickerImg: 'ui-colorpicker.png',
+            selectInputCols: initDataCols,
+            newRowText: defaultRowText,
+            newColText: defaultColText,
+            newCellValue: defaultCellVal
+        });
+    })();
+    </script>
+</body>
+
+</html>
